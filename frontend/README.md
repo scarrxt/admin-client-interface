@@ -1,16 +1,90 @@
-# React + Vite
+# Frontend Documentation
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React client for the portfolio and admin dashboard.
 
-Currently, two official plugins are available:
+## Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- React + Vite
+- React Router
+- Tailwind CSS (via `@tailwindcss/vite`)
+- Axios
 
-## React Compiler
+## Purpose
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+The frontend provides two experiences:
+- **Public site** for portfolio visitors
+- **Protected admin dashboard** for content management
 
-## Expanding the ESLint configuration
+## Directory Structure
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```text
+frontend/
+├─ src/
+│  ├─ api/
+│  │  └─ client.js
+│  ├─ components/
+│  │  ├─ public/
+│  │  └─ admin/
+│  ├─ pages/
+│  │  ├─ public/
+│  │  └─ admin/
+│  ├─ App.jsx
+│  ├─ main.jsx
+│  └─ index.css
+├─ .env.example
+├─ package.json
+└─ vite.config.js
+```
+
+## Routes
+
+### Public
+- `/` → Homepage (bio, projects, contact form)
+
+### Admin
+- `/admin/login` → Admin authentication
+- `/admin` → Dashboard overview (protected)
+- `/admin/projects` → Project CRUD (protected)
+- `/admin/inbox` → Message inbox (protected)
+- `/admin/settings` → Profile/bio/password settings (protected)
+
+## API Integration
+
+Configured in `src/api/client.js`:
+- Base URL from `VITE_API_URL`
+- JWT is stored in `localStorage`
+- Token attached to `Authorization` header for protected calls
+
+## Environment Variables
+
+Create `.env` from `.env.example`:
+
+```bash
+cp .env.example .env
+```
+
+Required variable:
+- `VITE_API_URL=http://localhost:5000/api`
+
+## Scripts
+
+- `npm run dev` → Start local dev server
+- `npm run build` → Production build
+- `npm run preview` → Preview production build
+- `npm run lint` → Run ESLint
+
+## Run Locally
+
+```bash
+npm install
+npm run dev
+```
+
+Default local URL:
+- `http://localhost:5173`
+
+## UI Notes
+
+- Minimalist, responsive layout using Tailwind utility classes
+- Admin navigation supports desktop sidebar and mobile navigation
+- Profile dropdown includes settings shortcut and logout
